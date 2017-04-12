@@ -19,7 +19,7 @@ public class SweepLine {
 		
 	}
 	
-	public void beginSweepLignAlgo()
+	public void beginSweepLineAlgo()
 	{
 		double x;
 		Point p = null;
