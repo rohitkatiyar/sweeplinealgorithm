@@ -32,8 +32,7 @@ public class SweepLine {
 		double x;
 		Point p = null, intersectPointX1 = null, intersectPointX2 = null;
 		Line segX1 = null, segX2 = null, segX = null;
-		
-		//TODO populate the lines
+		int index1, index2;
 		
 		createInititalQueueWithAbscissae(allLines);
 		createListOfAllPoints(allLines);
@@ -70,8 +69,20 @@ public class SweepLine {
 				// INSERT the segment
 				lineQueue_S.add(segX);
 				
-				segX1 = lineQueue_S.get(lineQueue_S.indexOf(segX) + 1);
-				segX2 = lineQueue_S.get(lineQueue_S.indexOf(segX) - 1);
+				
+				
+				index1 = lineQueue_S.indexOf(segX) + 1;
+				index2 = lineQueue_S.indexOf(segX) - 1;
+				
+				if(index1 <= lineQueue_S.size())
+				{
+					segX1 = lineQueue_S.get(index1);
+				}
+				
+				if(index2 >= 0)
+				{
+					segX2 = lineQueue_S.get(index2);
+				}
 				
 				if(segX1 != null)
 				{
@@ -97,9 +108,19 @@ public class SweepLine {
 					}
 				}
 				
-				segX1 = lineQueue_S.get(lineQueue_S.indexOf(segX) + 1);
-				segX2 = lineQueue_S.get(lineQueue_S.indexOf(segX) - 1);
+				index1 = lineQueue_S.indexOf(segX) + 1;
+				index2 = lineQueue_S.indexOf(segX) - 1;
 				
+				if(index1 <= lineQueue_S.size())
+				{
+					segX1 = lineQueue_S.get(index1);
+				}
+				
+				if(index2 >= 0)
+				{
+					segX2 = lineQueue_S.get(index2);
+				}
+			
 				if(segX1 != null && segX2 != null)
 				{
 					intersectPointX1 = checkGetIntersection(segX1, segX2);
@@ -137,8 +158,18 @@ public class SweepLine {
 				
 				Line segX3 = null, segX4 = null;
 				
-				segX3 = lineQueue_S.get(lineQueue_S.indexOf(segX1) + 1);
-				segX4 = lineQueue_S.get(lineQueue_S.indexOf(segX2) - 1);
+				index1 = lineQueue_S.indexOf(segX1) + 1;
+				index2 = lineQueue_S.indexOf(segX2) - 1;
+				
+				if(index1 <= lineQueue_S.size())
+				{
+					segX3 = lineQueue_S.get(index1);
+				}
+				
+				if(index2 >= 0)
+				{
+					segX4 = lineQueue_S.get(index2);
+				}
 
 				if(segX3 != null)
 				{
