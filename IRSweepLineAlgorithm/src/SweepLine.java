@@ -15,10 +15,16 @@ public class SweepLine {
 	public final int RIGHT_END_POINT = 1;
 	public final int INTERSECTION_POINT = 2;
 	public static int pointID = 200;
+	public static int lineID = 800;
+	public final int NULL_ID = -100000;
 	
 	public static void main(String args[])
 	{
+		SweepLine sl = new SweepLine();
 		
+		sl.fillTestValues();
+		sl.beginSweepLineAlgo();
+		sl.printIntersectionAbscissae();
 	}
 	
 	public void beginSweepLineAlgo()
@@ -82,11 +88,78 @@ public class SweepLine {
 			}
 			else if(p.getEventType() == RIGHT_END_POINT)
 			{
+				for(Line ln: allLines)
+				{
+					if(p.getLineId() == ln.getLineId())
+					{
+						segX = ln;
+						break;
+					}
+				}
+				
+				segX1 = lineQueue_S.get(lineQueue_S.indexOf(segX) + 1);
+				segX2 = lineQueue_S.get(lineQueue_S.indexOf(segX) - 1);
+				
+				if(segX1 != null && segX2 != null)
+				{
+					intersectPointX1 = checkGetIntersection(segX1, segX2);
+					insertNewIntersectionPoint(intersectPointX1);
+				}
+				
+				// Remove the segment
+				lineQueue_S.remove(segX);
 				
 			}
 			else if(p.getEventType() == INTERSECTION_POINT)
 			{
+				sortedIntersections_L.add(p.getX().getxValue());
 				
+				for(Line ln: allLines)
+				{
+					if(ln.getLineId() == p.getX().getParentLineId())
+					{
+						segX1 = ln;
+					}
+					else if(ln.getLineId() == p.getX().getParentLineIdSecond())
+					{
+						segX2 = ln;
+					}
+				}
+				
+				Line tmp = null;
+				
+				if(segX1.getStartP().getX().getxValue() < segX2.getStartP().getX().getxValue())
+				{
+					tmp = segX2;
+					segX2 = segX1;
+					segX1 = tmp;
+				}
+				
+				Line segX3 = null, segX4 = null;
+				
+				segX3 = lineQueue_S.get(lineQueue_S.indexOf(segX1) + 1);
+				segX4 = lineQueue_S.get(lineQueue_S.indexOf(segX2) - 1);
+
+				if(segX3 != null)
+				{
+					intersectPointX1 = checkGetIntersection(segX3, segX2);
+					insertNewIntersectionPoint(intersectPointX1);
+				}
+				
+				if(segX4 != null)
+				{
+					intersectPointX2 = checkGetIntersection(segX1, segX4);
+					insertNewIntersectionPoint(intersectPointX2);
+				}
+				
+				tmp = null;
+				int indexX1, indexX2;
+				
+				indexX1 = lineQueue_S.indexOf(segX1);
+				indexX2 = lineQueue_S.indexOf(segX2);
+				
+				lineQueue_S.add(indexX1, segX2);
+				lineQueue_S.add(indexX2, segX1);	
 			}
 		}
 		
@@ -138,8 +211,10 @@ public class SweepLine {
 				&& x >= l1.getStartP().getX().getxValue() 
 				&& x >= l2.getStartP().getX().getxValue())
 		{
-			newPoint = new Point(new Abscissae(l1.getLineId(), pointID, x), y, 
+			newPoint = new Point(new Abscissae(l1.getLineId(), l2.getLineId(), pointID, x), y, 
 					INTERSECTION_POINT, pointID, l1.getLineId());
+			
+			pointID++;
 		}
 		else
 		{
@@ -188,4 +263,53 @@ public class SweepLine {
 			
 		}
 	}
+	
+	public void printIntersectionAbscissae()
+	{
+		System.out.println("sortedIntersections_L: " + sortedIntersections_L);
+	}
+	
+	public void fillTestValues()
+	{
+		int lineId = lineID;
+		int pointId = pointID;
+		
+		Line l1 = new Line(new Point(
+				           new Abscissae(lineId, NULL_ID, pointId, 2),4,LEFT_END_POINT,pointId++,lineId
+				           ),
+				           new Point(
+				           new Abscissae(lineId, NULL_ID, pointId, 8),10,RIGHT_END_POINT,pointId++,lineId),lineId);
+		
+		lineId++;
+		
+		Line l2 = new Line(new Point(
+		           new Abscissae(lineId, NULL_ID, pointId, 2),6,LEFT_END_POINT,pointId++,lineId
+		           ),
+		           new Point(
+		           new Abscissae(lineId, NULL_ID, pointId, 12),8,RIGHT_END_POINT,pointId++,lineId),lineId);
+
+        lineId++;
+        
+        Line l3 = new Line(new Point(
+		           new Abscissae(lineId,NULL_ID, pointId, 2),4,LEFT_END_POINT,pointId++,lineId
+		           ),
+		           new Point(
+		           new Abscissae(lineId, NULL_ID, pointId, 10),10,RIGHT_END_POINT,pointId++,lineId),lineId);
+
+        lineId++;
+        
+        Line l4 = new Line(new Point(
+		           new Abscissae(lineId, NULL_ID, pointId, 2),8,LEFT_END_POINT,pointId++,lineId
+		           ),
+		           new Point(
+		           new Abscissae(lineId, NULL_ID, pointId, 4),18,RIGHT_END_POINT,pointId++,lineId),lineId);
+
+        lineId++;
+		
+        allLines.add(l1);
+        allLines.add(l2);
+        allLines.add(l3);
+        allLines.add(l4);		
+	}
+
 }

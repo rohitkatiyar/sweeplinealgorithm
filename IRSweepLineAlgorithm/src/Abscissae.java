@@ -1,14 +1,15 @@
 
 public class Abscissae {
 	
-	int parentLineId, parentPointId;
+	int parentLineId, parentPointId, parentLineIdSecond;
 	double xValue;
 
 	
-	public Abscissae(int parentLineId, int parentPointId, double xValue) {
+	public Abscissae(int parentLineId, int parentLineIdSecond, int parentPointId, double xValue) {
 		super();
 		this.parentLineId = parentLineId;
 		this.parentPointId = parentPointId;
+		this.parentLineIdSecond = parentLineIdSecond;
 		this.xValue = xValue;
 	}
 
@@ -26,6 +27,14 @@ public class Abscissae {
 
 	public void setParentLineId(int parentLineId) {
 		this.parentLineId = parentLineId;
+	}
+
+	public int getParentLineIdSecond() {
+		return parentLineIdSecond;
+	}
+
+	public void setParentLineIdSecond(int parentLineIdSecond) {
+		this.parentLineIdSecond = parentLineIdSecond;
 	}
 
 	public int getParentPointId() {

@@ -5,6 +5,7 @@ public class UnitTest {
 	public final int LEFT_END_POINT = 0;
 	public final int RIGHT_END_POINT = 1;
 	public final int INTERSECTION_POINT = 2;
+	public final int NULL_ID = -100000;
 	
 	ArrayList<Line> lines = new ArrayList<Line>();
 	
@@ -21,34 +22,34 @@ public class UnitTest {
 		int pointId = 0;
 		
 		Line l1 = new Line(new Point(
-				           new Abscissae(lineId, pointId, 2),4,LEFT_END_POINT,pointId++,lineId
+				           new Abscissae(lineId, NULL_ID, pointId, 2),4,LEFT_END_POINT,pointId++,lineId
 				           ),
 				           new Point(
-				           new Abscissae(lineId, pointId, 8),10,RIGHT_END_POINT,pointId++,lineId),lineId);
+				           new Abscissae(lineId, NULL_ID, pointId, 8),10,RIGHT_END_POINT,pointId++,lineId),lineId);
 		
 		lineId++;
 		
 		Line l2 = new Line(new Point(
-		           new Abscissae(lineId, pointId, 2),6,LEFT_END_POINT,pointId++,lineId
+		           new Abscissae(lineId, NULL_ID, pointId, 2),6,LEFT_END_POINT,pointId++,lineId
 		           ),
 		           new Point(
-		           new Abscissae(lineId, pointId, 12),8,RIGHT_END_POINT,pointId++,lineId),lineId);
+		           new Abscissae(lineId, NULL_ID, pointId, 12),8,RIGHT_END_POINT,pointId++,lineId),lineId);
 
         lineId++;
         
         Line l3 = new Line(new Point(
-		           new Abscissae(lineId, pointId, 2),4,LEFT_END_POINT,pointId++,lineId
+		           new Abscissae(lineId,NULL_ID, pointId, 2),4,LEFT_END_POINT,pointId++,lineId
 		           ),
 		           new Point(
-		           new Abscissae(lineId, pointId, 10),10,RIGHT_END_POINT,pointId++,lineId),lineId);
+		           new Abscissae(lineId, NULL_ID, pointId, 10),10,RIGHT_END_POINT,pointId++,lineId),lineId);
 
         lineId++;
         
         Line l4 = new Line(new Point(
-		           new Abscissae(lineId, pointId, 2),8,LEFT_END_POINT,pointId++,lineId
+		           new Abscissae(lineId, NULL_ID, pointId, 2),8,LEFT_END_POINT,pointId++,lineId
 		           ),
 		           new Point(
-		           new Abscissae(lineId, pointId, 4),18,RIGHT_END_POINT,pointId++,lineId),lineId);
+		           new Abscissae(lineId, NULL_ID, pointId, 4),18,RIGHT_END_POINT,pointId++,lineId),lineId);
 
         lineId++;
 		
