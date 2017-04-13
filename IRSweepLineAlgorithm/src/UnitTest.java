@@ -67,12 +67,72 @@ public class UnitTest {
 		
 		testLines = fillTestValues();
 		
-		System.out.println("Intersection between L1 and L2: " + sl.checkGetIntersection(testLines.get(0), testLines.get(1)).getX().getxValue());
-		System.out.println("Intersection between L2 and L3: " + sl.checkGetIntersection(testLines.get(1), testLines.get(2)).getX().getxValue());
-		System.out.println("Intersection between L1 and L3: " + sl.checkGetIntersection(testLines.get(0), testLines.get(2)).getX().getxValue());
-		System.out.println("Intersection between L1 and L4: " + sl.checkGetIntersection(testLines.get(0), testLines.get(3)).getX().getxValue());
-		System.out.println("Intersection between L2 and L4: " + sl.checkGetIntersection(testLines.get(1), testLines.get(3)).getX().getxValue());
-		System.out.println("Intersection between L3 and L4: " + sl.checkGetIntersection(testLines.get(2), testLines.get(3)).getX().getxValue());
+		Point tmp = null;
+		
+		tmp = sl.checkGetIntersection(testLines.get(0), testLines.get(1));
+		
+		if(tmp != null)
+		{
+			System.out.println("Intersection between L1 and L2: " + tmp.getX().getxValue());
+		}
+		else
+		{
+			System.out.println("Intersection between L1 and L2 is NULL ");
+		}
+		
+		tmp = sl.checkGetIntersection(testLines.get(1), testLines.get(2));
+		if(tmp != null)
+		{
+			System.out.println("Intersection between L2 and L3: " + tmp.getX().getxValue());
+		}
+		else
+		{
+			System.out.println("Intersection between L2 and L3 is NULL ");
+		}
+		
+		tmp = sl.checkGetIntersection(testLines.get(0), testLines.get(2));
+		
+		if(tmp != null)
+		{
+			System.out.println("Intersection between L1 and L3: " + tmp.getX().getxValue());
+		}
+		else
+		{
+			System.out.println("Intersection between L1 and L3 is NULL ");
+		}
+		
+		tmp = sl.checkGetIntersection(testLines.get(0), testLines.get(3));
+		
+		if(tmp != null)
+		{
+			System.out.println("Intersection between L1 and L4: " + tmp.getX().getxValue());
+		}
+		else
+		{
+			System.out.println("Intersection between L1 and L4 is NULL ");
+		}
+		
+		tmp = sl.checkGetIntersection(testLines.get(1), testLines.get(3));
+		
+		if(tmp != null)
+		{
+			System.out.println("Intersection between L2 and L4: " + tmp.getX().getxValue());
+		}
+		else
+		{
+			System.out.println("Intersection between L2 and L4 is NULL ");
+		}
+		
+		tmp = sl.checkGetIntersection(testLines.get(2), testLines.get(3));
+		
+		if(tmp != null)
+		{
+			System.out.println("Intersection between L3 and L4: " + tmp.getX().getxValue());
+		}
+		else
+		{
+			System.out.println("Intersection between L3 and L4 is NULL ");
+		}
 		
 		
 		sl.createInititalQueueWithAbscissae(lines);

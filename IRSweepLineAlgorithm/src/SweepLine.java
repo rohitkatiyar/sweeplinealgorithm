@@ -7,6 +7,7 @@ public class SweepLine {
 	ArrayList<Abscissae> initialPoints_E = new ArrayList<Abscissae>();
 	ArrayList<Line> lineQueue_S = new ArrayList<Line>();
 	ArrayList<Double> sortedIntersections_L = new ArrayList<Double>();
+
 	ArrayList<Point> allPoints = new ArrayList<Point>();
 	
 	public final int LEFT_END_POINT = 0;
@@ -22,15 +23,22 @@ public class SweepLine {
 	public void beginSweepLineAlgo()
 	{
 		double x;
-		Point p = null;
+		Point p = null, intersectPointX1 = null, intersectPointX2 = null;
+		Line segX1 = null, segX2 = null, segX = null;
 		
+		//TODO populate the lines
 		ArrayList<Line> allLines = new ArrayList<Line>();
 		
 		createInititalQueueWithAbscissae(allLines);
+		createListOfAllPoints(allLines);
 		
 		while(initialPoints_E.size() > 0)
 		{
 			x = initialPoints_E.get(0).getxValue();
+			
+			// Remove the abscissa now
+			initialPoints_E.remove(0);
+			
 			
 			for (Point findP: allPoints)
 			{
@@ -44,6 +52,30 @@ public class SweepLine {
 			
 			if(p.getEventType() == LEFT_END_POINT)
 			{
+				for(Line ln: allLines)
+				{
+					if(p.getLineId() == ln.getLineId())
+					{
+						segX = ln;
+						break;
+					}
+				}
+				
+				// INSERT the segment
+				lineQueue_S.add(segX);
+				
+				segX1 = lineQueue_S.get(lineQueue_S.indexOf(segX) + 1);
+				segX2 = lineQueue_S.get(lineQueue_S.indexOf(segX) - 1);
+				
+				if(segX1 != null)
+				{
+					intersectPointX1 = checkGetIntersection(segX1, segX);
+				}
+				
+				if(segX2 != null)
+				{
+					intersectPointX2 = checkGetIntersection(segX2, segX);
+				}
 				
 			}
 			else if(p.getEventType() == RIGHT_END_POINT)
@@ -69,9 +101,19 @@ public class SweepLine {
 		sortTheInitialQueue();	
 	}
 	
+	public void createListOfAllPoints(ArrayList<Line> lines)
+	{
+		for(Line ln: lines)
+		{
+			allPoints.add(ln.getStartP());
+			allPoints.add(ln.getEndP());	
+		}
+	}
+	
 	public Point checkGetIntersection(Line l1, Line l2)
 	{
 		double A1, A2, B1, B2, C1, C2, x = 0.0, y = 0.0, determinant;
+		Point newPoint = null;
 		
 		A1 = l1.getEndP().getY() - l1.getStartP().getY();
 		B1 = l1.getStartP().getX().getxValue() - l1.getEndP().getX().getxValue();
@@ -94,15 +136,14 @@ public class SweepLine {
 				&& x >= l1.getStartP().getX().getxValue() 
 				&& x >= l2.getStartP().getX().getxValue())
 		{
+			newPoint = new Point(new Abscissae(l1.getLineId(), pointID, x), y, 
+					INTERSECTION_POINT, pointID, l1.getLineId());
 		}
 		else
 		{
-			x =  -200000;
+			newPoint = null;
 		}
-		
-		Point newPoint = new Point(new Abscissae(l1.getLineId(), pointID, x), y, 
-				INTERSECTION_POINT, pointID, l1.getLineId());
-		
+			
 		return newPoint;
 	}
 	
