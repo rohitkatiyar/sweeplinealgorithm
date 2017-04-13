@@ -9,6 +9,7 @@ public class SweepLine {
 	ArrayList<Double> sortedIntersections_L = new ArrayList<Double>();
 
 	ArrayList<Point> allPoints = new ArrayList<Point>();
+	ArrayList<Line> allLines = new ArrayList<Line>();
 	
 	public final int LEFT_END_POINT = 0;
 	public final int RIGHT_END_POINT = 1;
@@ -27,7 +28,6 @@ public class SweepLine {
 		Line segX1 = null, segX2 = null, segX = null;
 		
 		//TODO populate the lines
-		ArrayList<Line> allLines = new ArrayList<Line>();
 		
 		createInititalQueueWithAbscissae(allLines);
 		createListOfAllPoints(allLines);
@@ -70,11 +70,13 @@ public class SweepLine {
 				if(segX1 != null)
 				{
 					intersectPointX1 = checkGetIntersection(segX1, segX);
+					insertNewIntersectionPoint(intersectPointX1);
 				}
 				
 				if(segX2 != null)
 				{
 					intersectPointX2 = checkGetIntersection(segX2, segX);
+					insertNewIntersectionPoint(intersectPointX2);
 				}
 				
 			}
@@ -172,4 +174,18 @@ public class SweepLine {
 		System.out.println("Sorted X values: " + initialPoints_E.toString());
 	}
 
+	public void insertNewIntersectionPoint(Point intersectPointX)
+	{
+		if(intersectPointX != null)
+		{
+			if(!initialPoints_E.contains(intersectPointX.getX()))
+			{
+				initialPoints_E.add(intersectPointX.getX());
+				sortTheInitialQueue();
+				
+				allPoints.add(intersectPointX);
+			}
+			
+		}
+	}
 }
