@@ -39,11 +39,14 @@ public class SweepLine {
 		
 		while(initialPoints_E.size() > 0)
 		{
+			System.out.println("Size of E: " + initialPoints_E.size());
+			
 			x = initialPoints_E.get(0).getxValue();
 			
 			// Remove the abscissa now
 			initialPoints_E.remove(0);
 			
+			System.out.println("Removed: Size of E: " + initialPoints_E.size());
 			
 			for (Point findP: allPoints)
 			{
@@ -72,9 +75,9 @@ public class SweepLine {
 				index1 = lineQueue_S.indexOf(segX) + 1;
 				index2 = lineQueue_S.indexOf(segX) - 1;
 				
-				System.out.println("index1: " + index1 + " S size: " + lineQueue_S + " index2: " + index2);
+				//System.out.println("index1: " + index1 + " S_size: " + lineQueue_S.size() + " index2: " + index2);
 				
-				if(index1 <= lineQueue_S.size() && lineQueue_S.isEmpty() == false)
+				if(index1 < lineQueue_S.size())
 				{
 					segX1 = lineQueue_S.get(index1);
 				}
@@ -111,7 +114,7 @@ public class SweepLine {
 				index1 = lineQueue_S.indexOf(segX) + 1;
 				index2 = lineQueue_S.indexOf(segX) - 1;
 				
-				if(index1 <= lineQueue_S.size() && lineQueue_S.isEmpty() == false)
+				if(index1 < lineQueue_S.size())
 				{
 					segX1 = lineQueue_S.get(index1);
 				}
@@ -161,7 +164,7 @@ public class SweepLine {
 				index1 = lineQueue_S.indexOf(segX1) + 1;
 				index2 = lineQueue_S.indexOf(segX2) - 1;
 				
-				if(index1 <= lineQueue_S.size() && lineQueue_S.isEmpty() == false)
+				if(index1 < lineQueue_S.size())
 				{
 					segX3 = lineQueue_S.get(index1);
 				}
@@ -287,6 +290,7 @@ public class SweepLine {
 			if(!initialPoints_E.contains(intersectPointX.getX()))
 			{
 				initialPoints_E.add(intersectPointX.getX());
+				System.out.println("Added: Size of E: " + initialPoints_E.size());
 				sortTheInitialQueue();
 				
 				allPoints.add(intersectPointX);
