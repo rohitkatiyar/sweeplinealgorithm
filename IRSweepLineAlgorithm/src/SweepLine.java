@@ -111,12 +111,12 @@ public class SweepLine {
 				index1 = lineQueue_S.indexOf(segX) + 1;
 				index2 = lineQueue_S.indexOf(segX) - 1;
 				
-				if(index1 <= lineQueue_S.size())
+				if(index1 <= lineQueue_S.size() && lineQueue_S.isEmpty() == false)
 				{
 					segX1 = lineQueue_S.get(index1);
 				}
 				
-				if(index2 >= 0)
+				if(index2 >= 0 && lineQueue_S.isEmpty() == false)
 				{
 					segX2 = lineQueue_S.get(index2);
 				}
@@ -161,12 +161,12 @@ public class SweepLine {
 				index1 = lineQueue_S.indexOf(segX1) + 1;
 				index2 = lineQueue_S.indexOf(segX2) - 1;
 				
-				if(index1 <= lineQueue_S.size())
+				if(index1 <= lineQueue_S.size() && lineQueue_S.isEmpty() == false)
 				{
 					segX3 = lineQueue_S.get(index1);
 				}
 				
-				if(index2 >= 0)
+				if(index2 >= 0 && lineQueue_S.isEmpty() == false)
 				{
 					segX4 = lineQueue_S.get(index2);
 				}
