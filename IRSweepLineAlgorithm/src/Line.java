@@ -34,4 +34,9 @@ public class Line {
 		this.lineId = lineId;
 	}
 
+	@Override
+	public String toString() {
+		return "Line [lineId=" + lineId + "]";
+	}
+
 }

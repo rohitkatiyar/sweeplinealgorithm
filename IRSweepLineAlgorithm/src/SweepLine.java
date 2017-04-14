@@ -5,6 +5,8 @@ import java.util.Comparator;
 public class SweepLine {
 	
 	ArrayList<Abscissae> initialPoints_E = new ArrayList<Abscissae>();
+	ArrayList<Double> removed_E = new ArrayList<Double>();
+	
 	ArrayList<Line> lineQueue_S = new ArrayList<Line>();
 	ArrayList<Double> sortedIntersections_L = new ArrayList<Double>();
 
@@ -15,8 +17,10 @@ public class SweepLine {
 	public final int RIGHT_END_POINT = 1;
 	public final int INTERSECTION_POINT = 2;
 	public static int pointID = 200;
+	public static int pointIdIntersect = 5000;
 	public static int lineID = 800;
 	public final int NULL_ID = -100000;
+	int iteration = 0;
 	
 	public static void main(String args[])
 	{
@@ -42,12 +46,7 @@ public class SweepLine {
 			System.out.println("Size of E: " + initialPoints_E.size());
 			
 			x = initialPoints_E.get(0).getxValue();
-			
-			// Remove the abscissa now
-			initialPoints_E.remove(0);
-			
-			System.out.println("Removed: Size of E: " + initialPoints_E.size());
-			
+					
 			for (Point findP: allPoints)
 			{
 				if(initialPoints_E.get(0).getParentPointId() == findP.getPointId())
@@ -57,6 +56,11 @@ public class SweepLine {
 				}
 				
 			}
+			
+			// Remove the abscissa now
+			removed_E.add(initialPoints_E.get(0).getxValue());
+			initialPoints_E.remove(0);
+			System.out.println("Removed: Size of E: " + initialPoints_E.size());
 			
 			if(p.getEventType() == LEFT_END_POINT)
 			{
@@ -69,8 +73,10 @@ public class SweepLine {
 					}
 				}
 				
+				System.out.println("LEFT_END_POINT:x= " + p.getX().getxValue());
+				
 				// INSERT the segment
-				lineQueue_S.add(segX);	
+				INSERT(segX);
 				
 				index1 = lineQueue_S.indexOf(segX) + 1;
 				index2 = lineQueue_S.indexOf(segX) - 1;
@@ -111,6 +117,8 @@ public class SweepLine {
 					}
 				}
 				
+				System.out.println("RIGHT_END_POINT:x= " + p.getX().getxValue());
+				
 				index1 = lineQueue_S.indexOf(segX) + 1;
 				index2 = lineQueue_S.indexOf(segX) - 1;
 				
@@ -136,7 +144,12 @@ public class SweepLine {
 			}
 			else if(p.getEventType() == INTERSECTION_POINT)
 			{
-				sortedIntersections_L.add(p.getX().getxValue());
+				System.out.println("INTERSECTION_POINT:x= " + p.getX().getxValue());
+				
+				if(!sortedIntersections_L.contains(p.getX().getxValue()))
+				{
+					sortedIntersections_L.add(p.getX().getxValue());
+				}
 				
 				for(Line ln: allLines)
 				{
@@ -195,6 +208,8 @@ public class SweepLine {
 				lineQueue_S.add(indexX1, segX2);
 				lineQueue_S.add(indexX2, segX1);	
 			}
+			
+			printStatus();
 		}
 		
 	}
@@ -217,6 +232,8 @@ public class SweepLine {
 			allPoints.add(ln.getStartP());
 			allPoints.add(ln.getEndP());	
 		}
+		
+		System.out.println("Total points: " + allPoints.size());
 	}
 	
 	public Point checkGetIntersection(Line l1, Line l2)
@@ -245,10 +262,10 @@ public class SweepLine {
 				&& x >= l1.getStartP().getX().getxValue() 
 				&& x >= l2.getStartP().getX().getxValue())
 		{
-			newPoint = new Point(new Abscissae(l1.getLineId(), l2.getLineId(), pointID, x), y, 
-					INTERSECTION_POINT, pointID, l1.getLineId());
+			newPoint = new Point(new Abscissae(l1.getLineId(), l2.getLineId(), pointIdIntersect, x), y, 
+					INTERSECTION_POINT, pointIdIntersect, l1.getLineId());
 			
-			pointID++;
+			pointIdIntersect++;
 		}
 		else
 		{
@@ -287,7 +304,18 @@ public class SweepLine {
 	{
 		if(intersectPointX != null)
 		{
-			if(!initialPoints_E.contains(intersectPointX.getX()))
+			boolean pointPresentFlag = false;
+			
+			for(Abscissae abs: initialPoints_E)
+			{
+				if(abs.getxValue() == intersectPointX.getX().getxValue())
+				{
+					pointPresentFlag = true;
+					break;
+				}
+			}
+			
+			if(!pointPresentFlag)
 			{
 				initialPoints_E.add(intersectPointX.getX());
 				System.out.println("Added: Size of E: " + initialPoints_E.size());
@@ -318,7 +346,7 @@ public class SweepLine {
 		lineId++;
 		
 		Line l2 = new Line(new Point(
-		           new Abscissae(lineId, NULL_ID, pointId, 2),6,LEFT_END_POINT,pointId++,lineId
+		           new Abscissae(lineId, NULL_ID, pointId, 1),6,LEFT_END_POINT,pointId++,lineId
 		           ),
 		           new Point(
 		           new Abscissae(lineId, NULL_ID, pointId, 12),8,RIGHT_END_POINT,pointId++,lineId),lineId);
@@ -326,7 +354,7 @@ public class SweepLine {
         lineId++;
         
         Line l3 = new Line(new Point(
-		           new Abscissae(lineId,NULL_ID, pointId, 2),4,LEFT_END_POINT,pointId++,lineId
+		           new Abscissae(lineId,NULL_ID, pointId, -2),4,LEFT_END_POINT,pointId++,lineId
 		           ),
 		           new Point(
 		           new Abscissae(lineId, NULL_ID, pointId, 10),10,RIGHT_END_POINT,pointId++,lineId),lineId);
@@ -334,10 +362,10 @@ public class SweepLine {
         lineId++;
         
         Line l4 = new Line(new Point(
-		           new Abscissae(lineId, NULL_ID, pointId, 2),8,LEFT_END_POINT,pointId++,lineId
+		           new Abscissae(lineId, NULL_ID, pointId, 3),5,LEFT_END_POINT,pointId++,lineId
 		           ),
 		           new Point(
-		           new Abscissae(lineId, NULL_ID, pointId, 4),18,RIGHT_END_POINT,pointId++,lineId),lineId);
+		           new Abscissae(lineId, NULL_ID, pointId, 7),18,RIGHT_END_POINT,pointId++,lineId),lineId);
 
         lineId++;
 		
@@ -345,6 +373,41 @@ public class SweepLine {
         allLines.add(l2);
         allLines.add(l3);
         allLines.add(l4);		
+	}
+	
+	public void printStatus()
+	{
+		System.out.println("---------------------------------------------");
+		System.out.print("S_Queue size: " + lineQueue_S.size());
+		
+		for(Line ln : lineQueue_S)
+		{
+			System.out.print(ln.toString());
+		}
+		
+		System.out.println();
+		System.out.println("E_Queue: " + initialPoints_E.toString());
+		System.out.println("L_Queue: " + sortedIntersections_L);
+		System.out.println("---------------------------------------------");	
+	}
+	
+	public void INSERT(Line ln)
+	{
+		boolean linePresentFlag = false;
+		
+		for(Line l: lineQueue_S)
+		{
+			if(l.getLineId() == ln.getLineId())
+			{
+				linePresentFlag = true;
+				break;
+			}	
+		}
+		
+		if(!linePresentFlag)
+		{
+			lineQueue_S.add(ln);	
+		}	
 	}
 
 }
