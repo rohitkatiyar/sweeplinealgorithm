@@ -199,14 +199,8 @@ public class SweepLine {
 					insertNewIntersectionPoint(intersectPointX2);
 				}
 				
-				tmp = null;
-				int indexX1, indexX2;
-				
-				indexX1 = lineQueue_S.indexOf(segX1);
-				indexX2 = lineQueue_S.indexOf(segX2);
-				
-				lineQueue_S.add(indexX1, segX2);
-				lineQueue_S.add(indexX2, segX1);	
+				// Swapping the positions
+				Collections.swap(lineQueue_S,lineQueue_S.indexOf(segX1), lineQueue_S.indexOf(segX2));
 			}
 			
 			printStatus();
