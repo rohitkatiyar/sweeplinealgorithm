@@ -1,12 +1,12 @@
 
-public class Point {
+public class SLPoint {
 	
 	double y;
 	int eventType, pointId, lineId; //0-Left end point, 1- right end point, 2- intersection point
 	Abscissae x;
 
 	
-	public Point(Abscissae x, double y, int eventType, int pointId, int lineId) {
+	public SLPoint(Abscissae x, double y, int eventType, int pointId, int lineId) {
 		super();
 		this.y = y;
 		this.eventType = eventType;

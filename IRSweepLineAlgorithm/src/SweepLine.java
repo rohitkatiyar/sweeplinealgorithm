@@ -10,7 +10,7 @@ public class SweepLine {
 	ArrayList<Line> lineQueue_S = new ArrayList<Line>();
 	ArrayList<Double> sortedIntersections_L = new ArrayList<Double>();
 
-	ArrayList<Point> allPoints = new ArrayList<Point>();
+	ArrayList<SLPoint> allPoints = new ArrayList<SLPoint>();
 	ArrayList<Line> allLines = new ArrayList<Line>();
 	
 	public final int LEFT_END_POINT = 0;
@@ -34,7 +34,7 @@ public class SweepLine {
 	public void beginSweepLineAlgo()
 	{
 		double x;
-		Point p = null, intersectPointX1 = null, intersectPointX2 = null;
+		SLPoint p = null, intersectPointX1 = null, intersectPointX2 = null;
 		Line segX1 = null, segX2 = null, segX = null;
 		int index1, index2;
 		
@@ -47,7 +47,7 @@ public class SweepLine {
 			
 			x = initialPoints_E.get(0).getxValue();
 					
-			for (Point findP: allPoints)
+			for (SLPoint findP: allPoints)
 			{
 				if(initialPoints_E.get(0).getParentPointId() == findP.getPointId())
 				{
@@ -230,10 +230,10 @@ public class SweepLine {
 		System.out.println("Total points: " + allPoints.size());
 	}
 	
-	public Point checkGetIntersection(Line l1, Line l2)
+	public SLPoint checkGetIntersection(Line l1, Line l2)
 	{
 		double A1, A2, B1, B2, C1, C2, x = 0.0, y = 0.0, determinant;
-		Point newPoint = null;
+		SLPoint newPoint = null;
 		
 		A1 = l1.getEndP().getY() - l1.getStartP().getY();
 		B1 = l1.getStartP().getX().getxValue() - l1.getEndP().getX().getxValue();
@@ -256,7 +256,7 @@ public class SweepLine {
 				&& x >= l1.getStartP().getX().getxValue() 
 				&& x >= l2.getStartP().getX().getxValue())
 		{
-			newPoint = new Point(new Abscissae(l1.getLineId(), l2.getLineId(), pointIdIntersect, x), y, 
+			newPoint = new SLPoint(new Abscissae(l1.getLineId(), l2.getLineId(), pointIdIntersect, x), y, 
 					INTERSECTION_POINT, pointIdIntersect, l1.getLineId());
 			
 			pointIdIntersect++;
@@ -294,7 +294,7 @@ public class SweepLine {
 		System.out.println("Sorted X values: " + initialPoints_E.toString());
 	}
 
-	public void insertNewIntersectionPoint(Point intersectPointX)
+	public void insertNewIntersectionPoint(SLPoint intersectPointX)
 	{
 		if(intersectPointX != null)
 		{
@@ -331,34 +331,34 @@ public class SweepLine {
 		int lineId = lineID;
 		int pointId = pointID;
 		
-		Line l1 = new Line(new Point(
+		Line l1 = new Line(new SLPoint(
 				           new Abscissae(lineId, NULL_ID, pointId, 2),4,LEFT_END_POINT,pointId++,lineId
 				           ),
-				           new Point(
+				           new SLPoint(
 				           new Abscissae(lineId, NULL_ID, pointId, 8),10,RIGHT_END_POINT,pointId++,lineId),lineId);
 		
 		lineId++;
 		
-		Line l2 = new Line(new Point(
+		Line l2 = new Line(new SLPoint(
 		           new Abscissae(lineId, NULL_ID, pointId, 1),6,LEFT_END_POINT,pointId++,lineId
 		           ),
-		           new Point(
+		           new SLPoint(
 		           new Abscissae(lineId, NULL_ID, pointId, 12),8,RIGHT_END_POINT,pointId++,lineId),lineId);
 
         lineId++;
         
-        Line l3 = new Line(new Point(
+        Line l3 = new Line(new SLPoint(
 		           new Abscissae(lineId,NULL_ID, pointId, -2),4,LEFT_END_POINT,pointId++,lineId
 		           ),
-		           new Point(
+		           new SLPoint(
 		           new Abscissae(lineId, NULL_ID, pointId, 10),10,RIGHT_END_POINT,pointId++,lineId),lineId);
 
         lineId++;
         
-        Line l4 = new Line(new Point(
+        Line l4 = new Line(new SLPoint(
 		           new Abscissae(lineId, NULL_ID, pointId, 3),5,LEFT_END_POINT,pointId++,lineId
 		           ),
-		           new Point(
+		           new SLPoint(
 		           new Abscissae(lineId, NULL_ID, pointId, 7),18,RIGHT_END_POINT,pointId++,lineId),lineId);
 
         lineId++;

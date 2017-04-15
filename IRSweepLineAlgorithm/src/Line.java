@@ -1,28 +1,28 @@
 
 public class Line {
-	Point startP, endP;
+	SLPoint startP, endP;
     private int lineId;
     
-	public Line(Point startP, Point endP, int lineId) {
+	public Line(SLPoint startP, SLPoint endP, int lineId) {
 		super();
 		this.startP = startP;
 		this.endP = endP;
 		this.lineId = lineId;
 	}
 
-	public Point getStartP() {
+	public SLPoint getStartP() {
 		return startP;
 	}
 
-	public void setStartP(Point startP) {
+	public void setStartP(SLPoint startP) {
 		this.startP = startP;
 	}
 
-	public Point getEndP() {
+	public SLPoint getEndP() {
 		return endP;
 	}
 
-	public void setEndP(Point endP) {
+	public void setEndP(SLPoint endP) {
 		this.endP = endP;
 	}
 

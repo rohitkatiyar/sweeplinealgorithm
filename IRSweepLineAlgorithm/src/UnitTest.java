@@ -21,34 +21,34 @@ public class UnitTest {
 		int lineId = 0;
 		int pointId = 0;
 		
-		Line l1 = new Line(new Point(
+		Line l1 = new Line(new SLPoint(
 		           new Abscissae(lineId, NULL_ID, pointId, 2),4,LEFT_END_POINT,pointId++,lineId
 		           ),
-		           new Point(
+		           new SLPoint(
 		           new Abscissae(lineId, NULL_ID, pointId, 8),10,RIGHT_END_POINT,pointId++,lineId),lineId);
 
 lineId++;
 
-Line l2 = new Line(new Point(
+Line l2 = new Line(new SLPoint(
         new Abscissae(lineId, NULL_ID, pointId, 1),6,LEFT_END_POINT,pointId++,lineId
         ),
-        new Point(
+        new SLPoint(
         new Abscissae(lineId, NULL_ID, pointId, 12),8,RIGHT_END_POINT,pointId++,lineId),lineId);
 
 lineId++;
 
-Line l3 = new Line(new Point(
+Line l3 = new Line(new SLPoint(
         new Abscissae(lineId,NULL_ID, pointId, -2),4,LEFT_END_POINT,pointId++,lineId
         ),
-        new Point(
+        new SLPoint(
         new Abscissae(lineId, NULL_ID, pointId, 10),10,RIGHT_END_POINT,pointId++,lineId),lineId);
 
 lineId++;
 
-Line l4 = new Line(new Point(
+Line l4 = new Line(new SLPoint(
         new Abscissae(lineId, NULL_ID, pointId, 3),8,LEFT_END_POINT,pointId++,lineId
         ),
-        new Point(
+        new SLPoint(
         new Abscissae(lineId, NULL_ID, pointId, 6),18,RIGHT_END_POINT,pointId++,lineId),lineId);
 
 lineId++;
@@ -68,7 +68,7 @@ lineId++;
 		
 		testLines = fillTestValues();
 		
-		Point tmp = null;
+		SLPoint tmp = null;
 		
 		tmp = sl.checkGetIntersection(testLines.get(0), testLines.get(1));
 		
