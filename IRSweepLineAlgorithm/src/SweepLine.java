@@ -9,6 +9,7 @@ public class SweepLine {
 	
 	ArrayList<Line> lineQueue_S = new ArrayList<Line>();
 	ArrayList<Double> sortedIntersections_L = new ArrayList<Double>();
+	ArrayList<Double> sortedIntersections_L_Y = new ArrayList<Double>();
 
 	ArrayList<SLPoint> allPoints = new ArrayList<SLPoint>();
 	ArrayList<Line> allLines = new ArrayList<Line>();
@@ -149,6 +150,7 @@ public class SweepLine {
 				if(!sortedIntersections_L.contains(p.getX().getxValue()))
 				{
 					sortedIntersections_L.add(p.getX().getxValue());
+					sortedIntersections_L_Y.add(p.getY());
 				}
 				
 				for(Line ln: allLines)
@@ -324,6 +326,7 @@ public class SweepLine {
 	public void printIntersectionAbscissae()
 	{
 		System.out.println("sortedIntersections_L: " + sortedIntersections_L);
+		System.out.println("sortedIntersections_L_Y: " + sortedIntersections_L_Y);
 	}
 	
 	public void fillTestValues()

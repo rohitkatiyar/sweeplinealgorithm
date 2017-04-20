@@ -46,10 +46,10 @@ Line l3 = new Line(new SLPoint(
 lineId++;
 
 Line l4 = new Line(new SLPoint(
-        new Abscissae(lineId, NULL_ID, pointId, 3),8,LEFT_END_POINT,pointId++,lineId
+        new Abscissae(lineId, NULL_ID, pointId, 3),5,LEFT_END_POINT,pointId++,lineId
         ),
         new SLPoint(
-        new Abscissae(lineId, NULL_ID, pointId, 6),18,RIGHT_END_POINT,pointId++,lineId),lineId);
+        new Abscissae(lineId, NULL_ID, pointId, 7),18,RIGHT_END_POINT,pointId++,lineId),lineId);
 
 lineId++;
 		
