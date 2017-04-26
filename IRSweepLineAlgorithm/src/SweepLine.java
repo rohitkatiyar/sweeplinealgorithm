@@ -4,9 +4,11 @@ import java.util.Comparator;
 
 public class SweepLine {
 	
+	// List of all abscissae
 	ArrayList<Abscissae> initialPoints_E = new ArrayList<Abscissae>();
 	ArrayList<Double> removed_E = new ArrayList<Double>();
 	
+	// List to store lines
 	ArrayList<Line> lineQueue_S = new ArrayList<Line>();
 	ArrayList<Double> sortedIntersections_L = new ArrayList<Double>();
 	ArrayList<Double> sortedIntersections_L_Y = new ArrayList<Double>();
@@ -32,6 +34,7 @@ public class SweepLine {
 		sl.printIntersectionAbscissae();
 	}
 	
+	// Implementation of the Sweep Line Algorithm
 	public void beginSweepLineAlgo()
 	{
 		double x;
@@ -39,9 +42,13 @@ public class SweepLine {
 		Line segX1 = null, segX2 = null, segX = null;
 		int index1, index2;
 		
+		// Save all the X values of all the points
 		createInititalQueueWithAbscissae(allLines);
+		
+		// Save all the points
 		createListOfAllPoints(allLines);
 		
+		// Pick the Point to which the abscissa belongs
 		while(initialPoints_E.size() > 0)
 		{
 			System.out.println("Size of E: " + initialPoints_E.size());
@@ -63,6 +70,10 @@ public class SweepLine {
 			initialPoints_E.remove(0);
 			System.out.println("Removed: Size of E: " + initialPoints_E.size());
 			
+			// Compare the event types of the point.
+			// If Left-End point - Add the line in the Queue S
+			// If Right-End point - Remove the line from the Queue S
+			// If Intersection point - Add the X value in List L
 			if(p.getEventType() == LEFT_END_POINT)
 			{
 				for(Line ln: allLines)
@@ -79,11 +90,15 @@ public class SweepLine {
 				// INSERT the segment
 				INSERT(segX);
 				
+				// Find the ABOVE and BELOW line segments for segX
+				// If they exists check if they intersect with the segX
+				// If intersection point exists add the X value to the List E
 				index1 = lineQueue_S.indexOf(segX) + 1;
 				index2 = lineQueue_S.indexOf(segX) - 1;
 				
 				//System.out.println("index1: " + index1 + " S_size: " + lineQueue_S.size() + " index2: " + index2);
 				
+				// Finding the BELOW and ABOVE line segments
 				if(index1 < lineQueue_S.size())
 				{
 					segX1 = lineQueue_S.get(index1);
@@ -94,6 +109,7 @@ public class SweepLine {
 					segX2 = lineQueue_S.get(index2);
 				}
 				
+				// Checking for the intersection points
 				if(segX1 != null)
 				{
 					intersectPointX1 = checkGetIntersection(segX1, segX);
@@ -120,6 +136,9 @@ public class SweepLine {
 				
 				System.out.println("RIGHT_END_POINT:x= " + p.getX().getxValue());
 				
+				// Find the ABOVE and BELOW line segments for segX
+				// If they exists check if they intersect with each other
+				// If intersection point exists add the X value to the List E
 				index1 = lineQueue_S.indexOf(segX) + 1;
 				index2 = lineQueue_S.indexOf(segX) - 1;
 				
@@ -210,6 +229,7 @@ public class SweepLine {
 		
 	}
 	
+	// Function to populate List with all the X values of all points and sort them
 	public void createInititalQueueWithAbscissae(ArrayList<Line> lines)
 	{
 		for(Line ln: lines)
@@ -221,6 +241,7 @@ public class SweepLine {
 		sortTheInitialQueue();	
 	}
 	
+	//Function to populate List with all points
 	public void createListOfAllPoints(ArrayList<Line> lines)
 	{
 		for(Line ln: lines)
@@ -232,6 +253,7 @@ public class SweepLine {
 		System.out.println("Total points: " + allPoints.size());
 	}
 	
+	// Function to check and get the intersection points
 	public SLPoint checkGetIntersection(Line l1, Line l2)
 	{
 		double A1, A2, B1, B2, C1, C2, x = 0.0, y = 0.0, determinant;
