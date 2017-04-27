@@ -24,16 +24,29 @@ import java.awt.event.MouseMotionListener;
 
 public class MultiLineMouse extends JPanel implements MouseListener, MouseMotionListener, KeyListener{
 	
-    Point pointStart = new Point();
-    Point pointEnd   = new Point();
-    Point prevPoint = new Point();
-    Point newPoint = null;
+	// List of all abscissae
+	ArrayList<Abscissae> initialPoints_E = new ArrayList<Abscissae>();
+	ArrayList<Double> removed_E = new ArrayList<Double>();
+	
+	// List to store lines
+	ArrayList<Line> lineQueue_S = new ArrayList<Line>();
+	ArrayList<Double> sortedIntersections_L = new ArrayList<Double>();
+	ArrayList<Double> sortedIntersections_L_Y = new ArrayList<Double>();
+
+	ArrayList<SLPoint> allPoints = new ArrayList<SLPoint>();
+	ArrayList<Line> allLines = new ArrayList<Line>();
+	
+	public final int LEFT_END_POINT = 0;
+	public final int RIGHT_END_POINT = 1;
+	public final int INTERSECTION_POINT = 2;
+	public static int pointID = 200;
+	public static int pointIdIntersect = 5000;
+	public static int lineID = 800;
+	public final int NULL_ID = -100000;
+	int iteration = 0;
     
     private JLabel displayInstruction1 = new JLabel();
     private JLabel displayInstruction = new JLabel();
-    
-    ArrayList<Point> intersectionPoints = new ArrayList<Point>();
-    ArrayList<Line> lines = new ArrayList<Line>();
     
 	private boolean mouseActionEnabled = true;
 	private boolean mouseDragged = false;
@@ -74,17 +87,7 @@ public class MultiLineMouse extends JPanel implements MouseListener, MouseMotion
 			Point tmp;
 			mouseActionEnabled = false;
 			
-			for (int i = 0; i<lines.size(); i++) 
-			{
-				for(int j = i+1; j < lines.size(); j++)
-				{
-					tmp = checkGetIntersection(lines.get(i), lines.get(j));
-					if(tmp != null && !intersectionPoints.contains(tmp))
-					{
-						intersectionPoints.add(tmp);
-					}
-				}
-			}
+//TODO begin sweep line
 			
 			displayInstruction.setText("Press 'i' to see the intersection points!!");	
 		}
@@ -235,42 +238,6 @@ public class MultiLineMouse extends JPanel implements MouseListener, MouseMotion
 			//g.setColor(Color.blue);
 			g.fillOval(x2, y2, 8, 8);
 		}
-	}
-
-	public Point checkGetIntersection(Line l1, Line l2)
-	{
-		double A1, A2, B1, B2, C1, C2, x = 0.0, y = 0.0, determinant;
-		
-		A1 = l1.getEnd().getY() - l1.getStart().getY();
-		B1 = l1.getStart().getX() - l1.getEnd().getX();
-		C1 = (A1 * l1.getStart().getX()) + (B1 * l1.getStart().getY());
-		
-		A2 = l2.getEnd().getY() - l2.getStart().getY();
-		B2 = l2.getStart().getX() - l2.getEnd().getX();
-		C2 = (A2 * l2.getStart().getX()) + (B2 * l2.getStart().getY());
-		
-		determinant = (A1 * B2) - (A2 * B1);
-		
-		if(determinant != 0)
-		{
-			x = ((B2 * C1) - (B1 * C2))/determinant;
-			y = ((A1 * C2) - (A2 * C1))/determinant;
-		}
-		
-		if(x <= l1.getEnd().getX() 
-				&& x <= l2.getEnd().getX() 
-				&& x >= l1.getStart().getX() 
-				&& x >= l2.getStart().getX())
-		{
-			newPoint = new Point((int)x, (int)y);
-			
-			return newPoint;
-		}
-		else
-		{
-			return null;
-		}
-			
 	}
 	
 }

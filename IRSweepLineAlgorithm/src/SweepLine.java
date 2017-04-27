@@ -293,6 +293,7 @@ public class SweepLine {
 		return newPoint;
 	}
 	
+	// Function to sort the list E containing all the X values
 	public void sortTheInitialQueue()
 	{
 		Collections.sort(initialPoints_E, new Comparator<Abscissae>() {
@@ -318,6 +319,7 @@ public class SweepLine {
 		System.out.println("Sorted X values: " + initialPoints_E.toString());
 	}
 
+	// Function to insert the ndw intersection point in List E
 	public void insertNewIntersectionPoint(SLPoint intersectPointX)
 	{
 		if(intersectPointX != null)
@@ -345,12 +347,14 @@ public class SweepLine {
 		}
 	}
 	
+	// Function to print the intersection points
 	public void printIntersectionAbscissae()
 	{
 		System.out.println("sortedIntersections_L: " + sortedIntersections_L);
 		System.out.println("sortedIntersections_L_Y: " + sortedIntersections_L_Y);
 	}
 	
+	// Function to fill the test values and test the algorithm
 	public void fillTestValues()
 	{
 		int lineId = lineID;
@@ -394,6 +398,7 @@ public class SweepLine {
         allLines.add(l4);		
 	}
 	
+	// Function to print the status of the queues
 	public void printStatus()
 	{
 		System.out.println("---------------------------------------------");
@@ -410,6 +415,7 @@ public class SweepLine {
 		System.out.println("---------------------------------------------");	
 	}
 	
+	// Function to insert line in Queue S
 	public void INSERT(Line ln)
 	{
 		boolean linePresentFlag = false;
