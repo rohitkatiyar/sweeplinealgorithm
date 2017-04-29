@@ -13,6 +13,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.jfree.ui.RefineryUtilities;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
@@ -42,22 +44,26 @@ public class MultiLineMouse extends JPanel implements MouseListener, MouseMotion
 	ArrayList<SLPoint> allPoints = new ArrayList<SLPoint>();
 	ArrayList<Line> allLines = new ArrayList<Line>();
 	
-	public final int LEFT_END_POINT = 0;
-	public final int RIGHT_END_POINT = 1;
-	public final int INTERSECTION_POINT = 2;
-	public static int pointID = 200;
-	public static int pointIdIntersect = 5000;
-	public static int lineID = 800;
-	public final int NULL_ID = -100000;
+	private final int LEFT_END_POINT = 0;
+	private final int RIGHT_END_POINT = 1;
+	private final int INTERSECTION_POINT = 2;
+	private static int pointID = 200;
+	private static int pointIdIntersect = 5000;
+	private static int lineID = 800;
+	private final int NULL_ID = -100000;
+	private Long totalTime;
 	int iteration = 0;
     
     private JLabel displayInstruction1 = new JLabel();
     private JLabel displayInstruction = new JLabel();
+    private JLabel displayTimeTaken = new JLabel();
     
 	private boolean mouseActionEnabled = true;
 	private boolean mouseDragged = false;
 	private boolean sectionFlag = false;
 	private boolean initialFlag = true;
+	
+	private static JFrame frame;
 	
 	private static final long serialVersionUID = 1L;
 	private static final Dimension PREFERRED_SIZE = new Dimension(1750, 1024);
@@ -71,12 +77,13 @@ public class MultiLineMouse extends JPanel implements MouseListener, MouseMotion
 
 	public static void main(String args[]) throws Exception {
 		
-		JFrame frame = new JFrame("Sweep Line Algorithm");
+		frame = new JFrame("Sweep Line Algorithm");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setPreferredSize(PREFERRED_SIZE);
 		frame.setContentPane(new MultiLineMouse());
 		frame.pack();
-	    frame.setVisible(true);    
+	    frame.setVisible(true); 
+	    
 	}
 	
 	//request focus to the key listener
@@ -90,18 +97,44 @@ public class MultiLineMouse extends JPanel implements MouseListener, MouseMotion
 		// TODO Auto-generated method stub
 		if(e.getKeyChar() == 'n') 
 		{
-			Point tmp;
 			mouseActionEnabled = false;
 			
+			//Start time
+			Long startTime = System.currentTimeMillis();
+			
+			// Execute Sweep Line Algo
 			beginSweepLineAlgo();
+			
+			// End time
+			Long endTime = System.currentTimeMillis();
+			
+			totalTime = endTime - startTime;
+			
+			displayInstruction.setText("Total time: " + totalTime +"millisec. Press 'i' to see the intersection points!!");
+			//displayTimeTaken.setText("Total time taken:" + totalTime);
+			//repaint();
 			printIntersectionAbscissae();
 			
-			displayInstruction.setText("Press 'i' to see the intersection points!!");	
+				
 		}
 		else if(e.getKeyChar() == 'i')
 		{
 			sectionFlag = true;
+			displayInstruction.setText("Press r to see the Time vs Number of Intersection graph.");
 			repaint();
+		}
+		else if(e.getKeyChar() == 'r')
+		{
+			//frame.revalidate();
+			//frame.repaint();
+			
+			 LineChart_AWT chart = new LineChart_AWT(
+			         "Time Vs Intersection Points" ,
+			         "Time vs Number of Intersection Points");
+
+			      chart.pack( );
+			      RefineryUtilities.centerFrameOnScreen( chart );
+			      chart.setVisible( true );
 		}
 		
 	}
@@ -191,6 +224,10 @@ public class MultiLineMouse extends JPanel implements MouseListener, MouseMotion
 		displayInstruction1.setBounds(0, 30, 1750, 100);
 		add(displayInstruction1);
 		
+		/*displayTimeTaken.setFont(new Font("Verdana",1,20));
+		displayTimeTaken.setBounds(1450, 10, 1750, 100);
+		add(displayTimeTaken);*/
+		
 		if(mouseDragged)
 		{
 			draw(g2d, pointStart, prevPoint);
@@ -213,7 +250,7 @@ public class MultiLineMouse extends JPanel implements MouseListener, MouseMotion
     	
     	if(sectionFlag)
     	{
-    		displayInstruction1.setText("Intersection Point:" + intersectionPoints.toString());
+    		displayInstruction1.setText("Total lines: "+ allLines.size()+". Total Intersection Points:" + intersectionPoints.size());
     		
     		for(Point p : intersectionPoints)
     		{
