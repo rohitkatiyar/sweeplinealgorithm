@@ -154,6 +154,7 @@ public class MultiLineMouse extends JPanel implements MouseListener, MouseMotion
 		           ),
 		           new SLPoint(
 		           new Abscissae(lineID, NULL_ID, pointID, pointEnd.getX()),pointEnd.getY(), RIGHT_END_POINT,pointID++,lineID),lineID));
+		lineID++;
 		mouseDragged = false;
 		repaint();
 	}
@@ -551,7 +552,7 @@ public class MultiLineMouse extends JPanel implements MouseListener, MouseMotion
 		System.out.println("Sorted X values: " + initialPoints_E.toString());
 	}
 
-	// Function to insert the ndw intersection point in List E
+	// Function to insert the new intersection point in List E
 	public void insertNewIntersectionPoint(SLPoint intersectPointX)
 	{
 		if(intersectPointX != null)
