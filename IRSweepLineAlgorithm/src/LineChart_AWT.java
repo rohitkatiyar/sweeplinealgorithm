@@ -24,12 +24,14 @@ public class LineChart_AWT extends ApplicationFrame {
 
    private DefaultCategoryDataset createDataset( ) {
       DefaultCategoryDataset dataset = new DefaultCategoryDataset( );
+      dataset.addValue( 5 , "Time" , "1" );
       dataset.addValue( 8 , "Time" , "3" );
+      dataset.addValue( 11 , "Time" , "4" );
       dataset.addValue( 15 , "Time" , "5" );
+      dataset.addValue( 20 , "Time" , "8" );
       dataset.addValue( 36 , "Time" , "11" );
       dataset.addValue( 39 , "Time" ,  "14" );
       dataset.addValue( 42 , "Time" , "26" );
-      //dataset.addValue( 300 , "Time" , "2014" );
       return dataset;
    }
    

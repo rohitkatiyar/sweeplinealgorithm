@@ -24,7 +24,7 @@ import java.awt.event.MouseMotionAdapter;
 //import java.awt.Point;
 import java.awt.event.MouseMotionListener;
 
-public class MultiLineMouse extends JPanel implements MouseListener, MouseMotionListener, KeyListener{
+public class SweepLineUI extends JPanel implements MouseListener, MouseMotionListener, KeyListener{
 	
 	Point pointStart = new Point();
     Point pointEnd   = new Point();
@@ -68,7 +68,7 @@ public class MultiLineMouse extends JPanel implements MouseListener, MouseMotion
 	private static final long serialVersionUID = 1L;
 	private static final Dimension PREFERRED_SIZE = new Dimension(1750, 1024);
 	
-	public MultiLineMouse() {
+	public SweepLineUI() {
 		super();
 		addMouseListener(this);
 		addMouseMotionListener(this);
@@ -80,7 +80,7 @@ public class MultiLineMouse extends JPanel implements MouseListener, MouseMotion
 		frame = new JFrame("Sweep Line Algorithm");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setPreferredSize(PREFERRED_SIZE);
-		frame.setContentPane(new MultiLineMouse());
+		frame.setContentPane(new SweepLineUI());
 		frame.pack();
 	    frame.setVisible(true); 
 	    
@@ -491,7 +491,12 @@ public class MultiLineMouse extends JPanel implements MouseListener, MouseMotion
 				}
 				
 				// Swapping the positions
-				Collections.swap(lineQueue_S,lineQueue_S.indexOf(segX1), lineQueue_S.indexOf(segX2));
+				//Collections.synchronizedList(lineQueue_S);
+				System.out.println("Index for SWAP:"+ lineQueue_S.indexOf(segX1) + "," + lineQueue_S.indexOf(segX2));
+				if(lineQueue_S.indexOf(segX1) >= 0 && lineQueue_S.indexOf(segX2) >= 0)
+				{
+					Collections.swap(lineQueue_S,lineQueue_S.indexOf(segX1), lineQueue_S.indexOf(segX2));
+				}
 			}
 			
 			printStatus();
